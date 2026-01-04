@@ -1,0 +1,1954 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMAN 10 Depok</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(5, 150, 105, 0.2);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-divider {
+      height: 4px;
+      width: 80px;
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-divider::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .decorative-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      gap: 1rem;
+    }
+
+    .decorative-divider::before,
+    .decorative-divider::after {
+      content: '';
+      height: 2px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, #10b981, transparent);
+    }
+
+    .decorative-divider-icon {
+      font-size: 1.5rem;
+      color: #10b981;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    .slider-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slider-item.active {
+      opacity: 1;
+    }
+
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      color: #059669;
+    }
+
+    .slider-nav:hover {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .slider-nav-left {
+      left: 20px;
+    }
+
+    .slider-nav-right {
+      right: 20px;
+    }
+
+    .slider-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      background: white;
+      width: 32px;
+      border-radius: 6px;
+    }
+
+    .indicator:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .page-content {
+      display: block;
+    }
+
+    .page-content.hidden {
+      display: none;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .guru-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .guru-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(5, 150, 105, 0.2);
+    }
+
+    .guru-image-wrapper {
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    }
+
+    .guru-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .guru-image.position-top {
+      object-position: center top;
+    }
+
+    .guru-card:hover .guru-image {
+      transform: scale(1.05);
+    }
+
+    .guru-info {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .guru-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #059669;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .guru-subject {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* Carousel Styles */
+    .carousel-container {
+      max-width: 100%;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-item {
+      flex-shrink: 0;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transform: scale(0.75);
+      opacity: 0.5;
+      filter: blur(2px);
+    }
+
+    .carousel-item.center {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+      box-shadow: 0 12px 40px rgba(5, 150, 105, 0.3);
+      z-index: 10;
+    }
+
+    .carousel-item.left-1,
+    .carousel-item.right-1 {
+      transform: scale(0.85);
+      opacity: 0.7;
+      filter: blur(1px);
+    }
+
+    .carousel-item img {
+      width: 280px;
+      height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(5, 150, 105, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: #059669;
+      width: 32px;
+      border-radius: 6px;
+    }
+
+    .carousel-dot:hover {
+      background: rgba(5, 150, 105, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .carousel-item img {
+        width: 280px;
+        height: 360px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full overflow-auto">
+  <div id="app" class="h-full w-full"><!-- Header -->
+   <header class="gradient-bg text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+     <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-4"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipKEV9RPj0wCpAu4wdD1pDRwPnLPpr181f8SCXUcyPCqhqAdjfr8FmmvFzX-a9y-sx_8pkBY7ChvE63fXrPQF_k-y_mdRWHPWnZqIVnTxyaEWCune4zS5_54cZx-sRQg_RpJdugO64LiUWK_I3WRJL_v8dzpV55f2sC3NdmUzHyniMs_3tncvk0u5pdiw/s1587/sman10.png" alt="Logo SMAN 10 Depok" class="object-contain" style="width: 88px; height: 88px; background: white; padding: 4px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" onerror="this.src=''; this.alt='Logo tidak dapat dimuat'; this.style.display='none';">
+       <div>
+        <h1 id="school-name" class="text-2xl font-bold">SMAN 10 Depok</h1>
+        <p id="tagline" class="text-sm opacity-90">Berakhlak Mulia, Berprestasi, Berbudaya Lingkungan, dan Berwawasan Global</p>
+       </div>
+      </div>
+     </div><!-- Navigation -->
+     <nav class="border-t border-white border-opacity-30 pt-3">
+      <ul class="flex flex-wrap gap-2 md:gap-4 justify-center md:justify-start">
+       <li><a href="#beranda" class="nav-link active px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('beranda'); return false;">Beranda</a></li>
+       <li><a href="#kurikulum" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('kurikulum'); return false;">Kurikulum</a></li>
+       <li><a href="#kesiswaan" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('kesiswaan'); return false;">Kesiswaan</a></li>
+       <li><a href="#humas" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('humas'); return false;">Humas</a></li>
+       <li><a href="#sarpras" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('sarpras'); return false;">Sarpras</a></li>
+       <li><a href="#tata-usaha" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('tata-usaha'); return false;">Tata Usaha</a></li>
+       <li><a href="#perpustakaan" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('perpustakaan'); return false;">Perpustakaan</a></li>
+       <li><a href="#guru" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition-all" onclick="showPage('guru'); return false;">Guru</a></li>
+      </ul>
+     </nav>
+    </div>
+   </header><!-- Beranda Page -->
+   <div id="page-beranda" class="page-content"><!-- Hero Slider Section -->
+    <section class="relative w-full" style="height: 600px; overflow: hidden;">
+     <div id="slider" class="relative w-full h-full">
+      <div class="slider-item active" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikVQpRXlt64kDShrXZID-jaQVzdt0eRRUOwy0GU6tpw4qbhBjV1gnRYhD-sMJnqpEgTQ-IYvYXQMyIxDszTc16sZADdOKRPNX2YOQc_Kz9gEZ0P_nGImGKUhUV3dos6cSq92n0fWtTTBdrBXLfgaxNx48eox2JYyEPksFHfqGpGDQySopfG-0ko56DjEU/s6000/IMG_1103.JPG');"></div>
+      <div class="slider-item" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9x13kN5ixwXu4tZ68j9uDtOA0Ucaf2Vy4PVe1gOeMJjpEuZmztlHNwq0FSWUrSuGeAxcfyeBwlY2y74qfiJ0HigMreiJkRqR_f5QRNKvQCT1YWM_HASJOr64ehmcG6hQKzBkYLuFkHzCgu-fFuID0hDYC9kjzJttx3UUnCJTRdknWipf2WEIvFDE3m30/s6000/IMG_1062.JPG');"></div>
+      <div class="slider-item" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoumL4H-OhzXu_mx1pxrphhzz06RZ4zqa45XGebLy-Vy1GFTcQXk3FEhtnSiFIVsDNDECEIG19MqOp951RW0OvCSO72cm7LCdt_4esu8NNeUkCFMP5GusSCSK4M7yudno3gMz0D8rWxDLzymNPKlOFwwq-yQMlk8sjTECjGOZ4Ix0w04T1yzQ37UfBpkE/s6000/IMG_2751.JPG');"></div>
+      <div class="slider-item" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpa0HXsPgA7o_BO0_cgj3jUyse-dWiY5uzlBv4ZMBddWxohnzAFoRdoVIReJO9Wh2wP2QbIjVVIrzXB9aWhLC9Cersl7v0z8dbQLELQgYe62jtF65fv_59wW0JO7W8Bg5U0-cte7ZG38u_gzb0d4U0zOXzsojYGhTTTpQL4pAvHQAdHdRz0wPIh9cEohM/s6000/IMG_3850.JPG');"></div>
+      <div class="slider-item" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRooK76nS0wq2CRxer-HRB9PWOBcbxG1PF5Ld60Y9h43ikZ49al2RNnfrtR-CTGr4qHTEDcQ4DzQ-JNvo0B13LEPvlZUQyudIK0HGlc8sguQLb3i2Q2NK34WVYjthUvcLorVWI0yHybaYTtYaSajI7LJhBckYQdnYZVyJiqdZ1XqwmA5DcDqF2p0nK8xc/s1156/IMG-20251128-WA0030.jpg');"></div>
+      <div class="slider-item" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg65pt33Z-SJx_l5OyfxiXPjo-AH9waoW0_Ha1lvHAMDcCsMh8S3Atd0NVUeyzKgkV5daDJn3-kDy1TV5qDLg9RYrTzalR5yi5SaRRvZHJWKM1NSKooEX4lIQJBTtGaWi_NPGeipjoJQ0KrCFShzMHPJgmOgZ0RAZ9GkLJ9alu02mON-XjOrwWaXDUnyAQ/s6000/IMG_1323.JPG');"></div>
+     </div><!-- Slider Navigation --> <button id="prev-slide" class="slider-nav slider-nav-left">
+      <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" />
+      </svg></button> <button id="next-slide" class="slider-nav slider-nav-right">
+      <svg width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" />
+      </svg></button> <!-- Slider Indicators -->
+     <div class="slider-indicators"><span class="indicator active" data-slide="0"></span> <span class="indicator" data-slide="1"></span> <span class="indicator" data-slide="2"></span> <span class="indicator" data-slide="3"></span> <span class="indicator" data-slide="4"></span> <span class="indicator" data-slide="5"></span>
+     </div>
+    </section><!-- Sambutan Kepala Sekolah Section -->
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Sambutan Kepala Sekolah</h2>
+      <div class="decorative-divider mb-8"><span class="decorative-divider-icon">����‍💼</span>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+       <div class="grid md:grid-cols-3 gap-8 p-8 items-center"><!-- Foto Kepala Sekolah -->
+        <div class="md:col-span-1 flex flex-col items-center justify-center">
+         <div class="rounded-lg overflow-hidden mb-4 shadow-xl border-4 border-green-400" style="width: 240px; height: 240px;"><img src="https://sman10depok.sch.id/guru/asep2.png" alt="Kepala Sekolah SMAN 10 Depok" class="w-full h-full object-cover object-center" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:6rem;color:#10b981;background:#f0fdf4;\'>👨‍💼</div>';">
+         </div>
+         <h3 class="text-xl font-bold text-center mb-1" style="color: #059669;">Asep Panji Lesmana, S.S.</h3>
+         <p class="text-sm text-center font-semibold" style="color: #6b7280;">Kepala Sekolah</p>
+        </div><!-- Teks Sambutan -->
+        <div class="md:col-span-2 flex flex-col justify-center">
+         <p class="text-base leading-relaxed mb-4" style="color: #374151;">Selamat datang di website resmi SMA Negeri 10 Kota Depok. Website ini kami hadirkan sebagai media informasi, komunikasi, dan transparansi kepada seluruh warga sekolah dan masyarakat luas mengenai berbagai program, prestasi, serta aktivitas pendidikan di SMAN 10 Depok.</p>
+         <p class="text-base leading-relaxed mb-4" style="color: #374151;">Sejalan dengan visi kami, yaitu mewujudkan lulusan yang berakhlak mulia, unggul dalam prestasi dan inovasi, berbudaya lingkungan, serta berwawasan global, sekolah terus berkomitmen menghadirkan pembelajaran yang bermakna, aman, dan adaptif terhadap perkembangan zaman.</p>
+         <p class="text-base leading-relaxed mb-4" style="color: #374151;">Kami percaya bahwa kolaborasi antara sekolah, orang tua, peserta didik, dan seluruh pemangku kepentingan merupakan kunci utama dalam meningkatkan mutu pendidikan.</p>
+         <p class="text-base leading-relaxed font-semibold" style="color: #059669;">Semoga website ini dapat menjadi jendela informasi yang bermanfaat sekaligus sarana untuk memperkuat sinergi dalam mewujudkan SMAN 10 Depok sebagai sekolah terbaik di Indonesia.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Info Terbaru Section -->
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Info Terbaru</h2>
+      <div class="decorative-divider mb-12"><span class="decorative-divider-icon">📰</span>
+      </div>
+      <div class="carousel-container" style="position: relative; overflow: hidden; padding: 40px 0;">
+       <div class="carousel-track" id="carousel-track" style="display: flex; gap: 30px; transition: transform 0.5s ease; justify-content: center; align-items: center;">
+        <div class="carousel-item" data-index="0"><img src="https://sman10depok.sch.id/feed/5.jpeg" alt="Info 5" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+        </div>
+        <div class="carousel-item" data-index="1"><img src="https://sman10depok.sch.id/feed/4.jpeg" alt="Info 4" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+        </div>
+        <div class="carousel-item" data-index="2"><img src="https://sman10depok.sch.id/feed/3.jpeg" alt="Info 3" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+        </div>
+        <div class="carousel-item" data-index="3"><img src="https://sman10depok.sch.id/feed/2.jpeg" alt="Info 2" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+        </div>
+        <div class="carousel-item" data-index="4"><img src="https://sman10depok.sch.id/feed/1.jpeg" alt="Info 1" onerror="this.src=''; this.alt='Gambar tidak dapat dimuat'; this.style.display='none';">
+        </div>
+       </div><!-- Carousel Navigation Dots -->
+       <div class="carousel-dots" style="display: flex; justify-content: center; gap: 12px; margin-top: 30px;"><span class="carousel-dot active" data-slide="0"></span> <span class="carousel-dot" data-slide="1"></span> <span class="carousel-dot" data-slide="2"></span> <span class="carousel-dot" data-slide="3"></span> <span class="carousel-dot" data-slide="4"></span>
+       </div>
+      </div>
+     </div>
+    </section><!-- Vision Section -->
+    <section class="py-16 px-6" style="background-color: #f0fdf4;">
+     <div class="max-w-4xl mx-auto text-center fade-in">
+      <h2 id="vision-title" class="text-3xl font-bold mb-4" style="color: #059669;">Visi Sekolah</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">🌟</span>
+      </div>
+      <p id="vision-text" class="text-lg leading-relaxed" style="color: #374151;">"Mewujudkan lulusan yang berakhlak mulia, unggul dalam prestasi dan inovasi, berbudaya lingkungan, serta berwawasan global."</p>
+     </div>
+    </section><!-- Mission Section -->
+    <section class="py-16 px-6" style="background-color: #f0fdf4;">
+     <div class="max-w-5xl mx-auto">
+      <h2 id="mission-title" class="text-3xl font-bold text-center mb-4" style="color: #059669;">Misi Sekolah</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">�������</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         🙏
+        </div>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menanamkan dan mengembangkan nilai keimanan, ketakwaan, serta akhlak mulia dalam seluruh proses pembelajaran dan kehidupan warga sekolah.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         💡
+        </div>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menyelenggarakan pembelajaran yang inovatif, kreatif, kolaboratif, dan berbasis teknologi digital guna meningkatkan kualitas dan relevansi pembelajaran.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         🏆
+        </div>
+        <p class="text-base leading-relaxed" style="color: #374151;">Meningkatkan prestasi akademik dan nonakademik peserta didik di tingkat daerah, nasional, dan internasional.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         ���
+        </div>
+        <p class="text-base leading-relaxed" style="color: #374151;">Mewujudkan lingkungan sekolah yang bersih, sehat, asri, dan berkelanjutan sebagai ruang belajar yang aman, nyaman, dan kondusif.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         🌍
+        </div>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menyiapkan lulusan yang berwawasan global, adaptif, berdaya saing, serta berkarakter.</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Values Section -->
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-5xl mx-auto">
+      <h2 id="values-title" class="text-3xl font-bold text-center mb-4" style="color: #059669;">Nilai Kebaikan Sekolah</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">⭐</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         💪
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Cageur (Sehat)</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Sehat secara fisik, mental, dan spiritual, mampu berpikir dan bertindak rasional serta proporsional.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         ❤️
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Bageur (Baik)</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Berakhlak mulia, ramah, santun, peduli, dan memiliki budi pekerti luhur.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         ✅
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Bener (Benar)</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Jujur, amanah, bertanggung jawab, dan menjunjung integritas.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         🧠
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Pinter (Pintar)</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Cerdas, berilmu, dan memiliki pengetahuan serta keterampilan untuk menghadapi tantangan.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         ⚡
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Singer (Kreatif)</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Tekun, kreatif, inovatif, mampu beradaptasi, serta mau menerima kritik untuk refleksi diri.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Kurikulum Page -->
+   <div id="page-kurikulum" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Kurikulum</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">📚</span>
+      </div><!-- Struktur Organisasi Kurikulum -->
+      <div class="mb-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Struktur Organisasi Kurikulum</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">👥</span>
+       </div>
+       <div class="max-w-5xl mx-auto space-y-8"><!-- Wakil Kepala Sekolah Kurikulum -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-4 py-3" style="background-color: #059669;">
+          <h5 class="text-sm font-bold text-center text-white">Wakil Kepala Sekolah Bidang Kurikulum</h5>
+         </div>
+         <div class="p-6">
+          <div class="flex flex-col items-center">
+           <div class="w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-green-400 shadow-lg"><img src="https://sman10depok.sch.id/guru/GITA.png" alt="Gita Rani Putri Mangiri, M.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;color:#10b981;background:#f0fdf4;\'>👨‍�������</div>';">
+           </div>
+           <h5 class="text-xl font-bold text-center mb-2" style="color: #059669;">Gita Rani Putri Mangiri, M.Pd.</h5>
+          </div>
+         </div>
+        </div><!-- Staff Kurikulum -->
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4"><!-- Staff 1 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Asesmen &amp; Rapor</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/IBNU.png" alt="Ibnu Fadhilah Prayoga, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Ibnu Fadhilah Prayoga, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kurikulum</p>
+           </div>
+          </div>
+         </div><!-- Staff 2 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Data Akademik &amp; Mutu Pembelajaran</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/NABILA.png" alt="Nabila Nurul Isnaini, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Nabila Nurul Isnaini, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kurikulum</p>
+           </div>
+          </div>
+         </div><!-- Staff 3 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Jadwal &amp; Beban Mengajar</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/LAILY.png" alt="Laily Hikmah, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Laily Hikmah, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kurikulum</p>
+           </div>
+          </div>
+         </div><!-- Staff 4 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Perencanaan &amp; KOSP</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/AMDANI.png" alt="Amdani Darussalam, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Amdani Darussalam, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kurikulum</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- 4 Bagian Kurikulum -->
+      <div class="mb-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Bidang-Bidang Kurikulum</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">��</span>
+       </div>
+       <div class="grid gap-6 md:grid-cols-2 mb-16"><!-- Asesmen & Rapor -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-6 py-4" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+          <div class="flex items-center gap-3">
+           <div class="text-3xl">
+            📊
+           </div>
+           <h4 class="text-xl font-bold text-white">Asesmen &amp; Rapor</h4>
+          </div>
+         </div>
+         <div class="p-6">
+          <ul class="space-y-3">
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Penyusunan dan pengelolaan sistem penilaian formatif dan sumatif</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Pengolahan nilai raport siswa setiap semester</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Koordinasi pelaksanaan Penilaian Akhir Semester (PAS) dan Penilaian Akhir Tahun (PAT)</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Analisis hasil belajar siswa untuk perbaikan pembelajaran</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Pengelolaan leger dan dokumentasi hasil penilaian</span></li>
+          </ul>
+         </div>
+        </div><!-- Data Akademik & Mutu Pembelajaran -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-6 py-4" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+          <div class="flex items-center gap-3">
+           <div class="text-3xl">
+            📈
+           </div>
+           <h4 class="text-xl font-bold text-white">Data Akademik &amp; Mutu Pembelajaran</h4>
+          </div>
+         </div>
+         <div class="p-6">
+          <ul class="space-y-3">
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Pengelolaan dan pemutakhiran data akademik siswa</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Monitoring dan evaluasi mutu pembelajaran</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Penyusunan laporan capaian pembelajaran per semester</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Koordinasi supervisi dan observasi kelas</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Analisis ketercapaian standar kompetensi lulusan</span></li>
+          </ul>
+         </div>
+        </div><!-- Jadwal & Beban Mengajar -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-6 py-4" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+          <div class="flex items-center gap-3">
+           <div class="text-3xl">
+            📅
+           </div>
+           <h4 class="text-xl font-bold text-white">Jadwal &amp; Beban Mengajar</h4>
+          </div>
+         </div>
+         <div class="p-6">
+          <ul class="space-y-3">
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Penyusunan jadwal pelajaran setiap tahun ajaran</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Pembagian beban mengajar guru sesuai kompetensi</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Koordinasi jadwal ujian dan kegiatan akademik</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Pengelolaan jadwal kegiatan ekstrakurikuler</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Monitoring kehadiran dan pelaksanaan KBM</span></li>
+          </ul>
+         </div>
+        </div><!-- Perencanaan & KOSP -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-6 py-4" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+          <div class="flex items-center gap-3">
+           <div class="text-3xl">
+            📝
+           </div>
+           <h4 class="text-xl font-bold text-white">Perencanaan &amp; KOSP</h4>
+          </div>
+         </div>
+         <div class="p-6">
+          <ul class="space-y-3">
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Penyusunan Kurikulum Operasional Satuan Pendidikan (KOSP)</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Perencanaan program pembelajaran tahunan dan semester</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Penyusunan kalender pendidikan</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Koordinasi pengembangan Alur Tujuan Pembelajaran (ATP)</span></li>
+           <li class="flex items-start gap-3"><span class="text-green-600 mt-1">✓</span> <span class="text-sm" style="color: #374151;">Fasilitasi penyusunan modul ajar dan perangkat pembelajaran</span></li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </div><!-- Program Kerja Kurikulum 2026 -->
+      <div class="mb-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Program Kerja Kurikulum 2026</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">���</span>
+       </div><!-- Standar Kompetensi Lulusan -->
+       <div class="mb-12">
+        <div class="px-6 py-4 rounded-t-lg" style="background-color: #059669;">
+         <h4 class="text-xl font-bold text-white">📊 Standar Kompetensi Lulusan</h4>
+        </div>
+        <div class="bg-white rounded-b-lg shadow-lg overflow-hidden">
+         <div class="p-6 space-y-6"><!-- Program 1 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">1. Pengelolaan dan pendampingan PDSS untuk SNBP dan SNBT</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Januari - Februari 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Verifikasi Biodata murid kelas 12</li>
+            <li>Verifikasi nilai murid kelas 12 dari semester 1 hingga semester 6</li>
+            <li>Penentuan murid eligible</li>
+            <li>Pendaftaran SNBP</li>
+           </ul>
+          </div><!-- Program 2 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">2. Penyelenggaraan evaluasi akhir jenjang</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Januari - Maret 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Penyusunan perangkat Penilaian Sumatif Akhir Jenjang bentuk tertulis dan unjuk performa</li>
+            <li>Melaksanakan penilaian sumatif akhir jenjang</li>
+            <li>Pengolahan hasil PSAJ</li>
+           </ul>
+          </div><!-- Program 3 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">3. Pengelolaan dokumen kelulusan</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Maret - Mei 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Pengolahan nilai ijazah</li>
+            <li>Pencetakan SKL, sertifikat TKA, Ijazah</li>
+           </ul>
+          </div><!-- Program 4 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">4. Pelaksanaan Kokurikuler kelas X dan XI</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Mei 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Penentuan tema kokurikuler</li>
+            <li>Pembuatan modul kokurikuler</li>
+            <li>Pelaksanaan kokurikuler</li>
+           </ul>
+          </div><!-- Program 5 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">5. Pendalaman materi TKA</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Juli - Oktober 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Pendalaman Materi dari guru internal</li>
+            <li>Pendalaman materi dari bimbingan belajar</li>
+            <li>Try Out TKA</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div><!-- Standar Isi -->
+       <div class="mb-12">
+        <div class="px-6 py-4 rounded-t-lg" style="background-color: #059669;">
+         <h4 class="text-xl font-bold text-white">📝 Standar Isi</h4>
+        </div>
+        <div class="bg-white rounded-b-lg shadow-lg overflow-hidden">
+         <div class="p-6 space-y-6"><!-- Program 1 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">1. Administrasi Kurikulum</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Juni 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Pembagian tugas mengajar 2026/2027</li>
+            <li>Penyusunan kalender pendidikan</li>
+            <li>Jadwal KBM 2026/2027</li>
+            <li>Penetapan kriteria ketercapaian tujuan pembelajaran</li>
+            <li>Penetapan kriteria kelulusan</li>
+           </ul>
+          </div><!-- Program 2 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">2. Penyusunan Dokumen Kurikulum Satuan Pendidikan (KSP)</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">�� Waktu: Juli 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Pembentukan tim pengembang kurikulum</li>
+            <li>Penyusunan analisis SWOT dan analisa konteks SMA Negeri 10 Depok</li>
+            <li>Penyusunan Dokumen Kurikulum Satuan Pendidikan</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div><!-- Standar Proses -->
+       <div class="mb-12">
+        <div class="px-6 py-4 rounded-t-lg" style="background-color: #059669;">
+         <h4 class="text-xl font-bold text-white">⚙️ Standar Proses</h4>
+        </div>
+        <div class="bg-white rounded-b-lg shadow-lg overflow-hidden">
+         <div class="p-6 space-y-6"><!-- Program 1 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">1. Perencanaan Pembelajaran</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Juni 2026</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Penyusunan perangkat pembelajaran Guru (ATP, TP, Modul Ajar)</li>
+            <li>Pengembangan bahan ajar</li>
+           </ul>
+          </div><!-- Program 2 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">2. Pelaksanaan Pembelajaran</h5>
+           <p class="text-sm mb-2" style="color: #6b7280;">📅 Waktu: Juli 2026 - Juni 2027</p>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Pelaksanaan pembelajaran di kelas yang interaktif, inspiratif, menyenangkan, menantang, dan memotivasi</li>
+            <li>Pengawasan pembelajaran dikelas oleh guru piket</li>
+            <li>Pembelajaran life skill untuk kelas XII yang tidak mengikuti TKA</li>
+           </ul>
+          </div><!-- Program 3 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">3. Penilaian Pembelajaran</h5>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Penilaian proses pembelajaran oleh kepala sekolah, dan teman sejawat</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div><!-- Standar Penilaian Pendidikan -->
+       <div class="mb-12">
+        <div class="px-6 py-4 rounded-t-lg" style="background-color: #059669;">
+         <h4 class="text-xl font-bold text-white">📐 Standar Penilaian Pendidikan</h4>
+        </div>
+        <div class="bg-white rounded-b-lg shadow-lg overflow-hidden">
+         <div class="p-6 space-y-6"><!-- Program 1 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">1. Penyusunan perangkat penilaian formatif PSAS, PSAT, PSAJ</h5>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Menyusun kisi-kisi</li>
+            <li>Menyusun Kartu Soal</li>
+            <li>Menyusun naskah soal</li>
+            <li>Menyusun kunci jawaban</li>
+            <li>Menyusun analisis butir soal</li>
+           </ul>
+          </div><!-- Program 2 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">2. Pelaksanaan Penilaian</h5>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Penilaian formatif</li>
+            <li>Penilaian Sumatif Akhir Semester</li>
+            <li>Penilaian Sumatif Akhir Jenjang</li>
+            <li>Penilaian Sumatif Akhir Tahun</li>
+            <li>Penilaian TKA (November 2026)</li>
+           </ul>
+          </div><!-- Program 3 -->
+          <div class="border-l-4 border-green-500 pl-4">
+           <h5 class="font-bold text-lg mb-2" style="color: #059669;">3. Tindak Lanjut Hasil penilaian</h5>
+           <ul class="list-disc list-inside text-sm space-y-1" style="color: #374151;">
+            <li>Remedial dan pengayaan penilaian formatif</li>
+            <li>Pengolahan nilai setiap akhir semester</li>
+            <li>Pleno akhir semester dan akhir tahun</li>
+            <li>Pleno kelulusan</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Kesiswaan Page -->
+   <div id="page-kesiswaan" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Kesiswaan</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">🎓</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 mb-12">
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         🏅
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">OSIS</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Organisasi Siswa Intra Sekolah yang aktif mengembangkan kepemimpinan dan kreativitas siswa melalui berbagai kegiatan.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         ��
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Ekstrakurikuler</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">30+ pilihan ekstrakurikuler mulai dari olahraga, seni, sains, hingga teknologi untuk mengembangkan bakat siswa.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         🏆
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Prestasi</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Siswa-siswi kami telah meraih berbagai prestasi tingkat kota, provinsi, nasional, hingga internasional.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         🛡️
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Ketertiban</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menjaga keamanan, ketertiban, dan kedisiplinan siswa untuk menciptakan lingkungan belajar yang kondusif.</p>
+       </div>
+      </div><!-- Struktur Organisasi Section -->
+      <div class="mt-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Struktur Organisasi Kesiswaan</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">👥</span>
+       </div>
+       <div class="max-w-5xl mx-auto space-y-8"><!-- Wakil Kepala Sekolah -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-4 py-3" style="background-color: #059669;">
+          <h5 class="text-sm font-bold text-center text-white">Wakil Kepala Sekolah Bidang Kesiswaan</h5>
+         </div>
+         <div class="p-6">
+          <div class="flex flex-col items-center">
+           <div class="w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-green-400 shadow-lg"><img src="https://sman10depok.sch.id/guru/ERWAN.png" alt="Erwan, M.Pd., M.Sas." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+           </div>
+           <h5 class="text-xl font-bold text-center mb-2" style="color: #059669;">Erwan, M.Pd., M.Sas.</h5>
+          </div>
+         </div>
+        </div><!-- Staff Kesiswaan -->
+        <div class="grid gap-6 md:grid-cols-3"><!-- Staff 1 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Prestasi &amp; Ekstra Kurikuler</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/NOVA.png" alt="Nofa Rina Anggraeni, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Nofa Rina Anggraeni, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kesiswaan</p>
+           </div>
+          </div>
+         </div><!-- Staff 2 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Ketertiban</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/RUSMAN.png" alt="Rusman Somantri, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Rusman Somantri, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kesiswaan</p>
+           </div>
+          </div>
+         </div><!-- Staff 3 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Organisasi dan Kepemimpinan</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/EVAN.png" alt="Efan Yulistiyono, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Efan Yulistiyono, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Kesiswaan</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Program Kerja Section -->
+      <div class="mt-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Program Kerja Kesiswaan 2026</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">📅</span>
+       </div>
+       <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-12">
+        <div class="overflow-x-auto">
+         <table class="w-full">
+          <thead style="background-color: #059669;">
+           <tr>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">No</th>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">Program Kerja</th>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">Waktu Pelaksanaan</th>
+           </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">1</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">LIGAS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">3 - 15 Februari 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">2</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Penumbuhan Budi Pekerti</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">3 - 22 Maret 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">3</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">HUT SMA Negeri 10 Depok</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">7 April 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">4</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Peringatan Hari Kartini</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">21 April 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">5</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">HARDIKNAS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">2 Mei 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">6</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Hari Kebangkitan Nasional</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">20 Mei 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">7</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Idul Adha</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">28 Mei 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">8</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Hari Lahir Pancasila</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">1 Juni 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">9</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">SPMB</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">3 Juni - 7 Juli 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">10</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Tahun Baru Islam</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">16 Juni 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">11</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">MPLS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Juli 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">12</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Semangat Kemerdekaan</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">18 Agustus 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">13</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Maulid Nabi</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">26 Agustus 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">14</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Open Recruitment MPK/OSIS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">1 - 15 September 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">15</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">LDK MPK OSIS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">8 - 21 September 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">16</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pilketos &amp; Pilketum</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">5 Oktober 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">17</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Foto dan Cetak Kartu Pelajar Kelas X</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Oktober 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">18</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Foto Ijazah Kelas XII</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Oktober 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">19</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">ABUBA</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">28 - 30 Oktober 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">20</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Hari Pahlawan</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">10 November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">21</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Raker MPK OSIS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Pertengahan November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">22</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Workshop/Jambore Ekstrakurikuler</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">23</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Hari Guru Nasional</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">25 November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">24</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Rapat LPJ Kepengurusan MPK-OSIS</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">25</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Donor Darah</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Desember 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">26</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Toentas (Classmeeting)</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Pasca PSAS (Desember)</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">27</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Jalan-jalan Museum</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Tentatif</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">28</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Seminar Santoen</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Tentatif</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">29</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Kampanye Toleransi</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Tentatif</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">30</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">APAANSI (Ada Panggung Kreasi dan Seni)</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Tentatif</td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div><!-- Lomba dan Kompetisi Section -->
+       <div class="mt-16">
+        <h4 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Lomba &amp; Kompetisi</h4>
+        <div class="decorative-divider mb-8"><span class="decorative-divider-icon">🏆</span>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Lomba Debat Bahasa Inggris (NSDC)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Lomba Debat Bahasa Indonesia (LDBI)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">�� Liga Pelajar Indonesia Kota Depok</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 O2SN (Olimpiade Olahraga Siswa Nasional)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 FLS3N (Festival Lomba Seni Siswa Nasional)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 DBL (Development Basketball League)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Futsal Series</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Pramuka Ambarawa</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Festival PPI Kota Depok (Paskibra)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 OPSI (Olimpiade Pelajar Seluruh Indonesia)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Festival MGPAI - AGPAI - Rohis</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Karya Tulis Ilmiah BRIN</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 FIKSI (Kewirausahaan)</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Tari Nusantara - Putri Nawangdari TMII</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 Kemah Karakter PAI</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 AlSeac Debat Bahasa Inggris</p>
+         </div>
+         <div class="bg-white p-4 rounded-lg shadow-md border-l-4 hover:shadow-lg transition-shadow" style="border-color: #10b981;">
+          <p class="text-sm font-semibold" style="color: #059669;">🥇 AF Bakri</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Humas Page -->
+   <div id="page-humas" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Hubungan Masyarakat</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">🤝</span>
+      </div>
+      <div class="space-y-6 mb-16">
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">📢 Informasi Publik</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menyediakan informasi terkini tentang kegiatan sekolah, pengumuman penting, dan berita prestasi siswa kepada masyarakat.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">�� Kemitraan</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menjalin kerjasama dengan berbagai institusi, universitas, dan industri untuk pengembangan program sekolah.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">👨‍��‍👧‍�� Komite Sekolah</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Memfasilitasi komunikasi dan kerjasama antara sekolah dengan orang tua siswa dan masyarakat.</p>
+       </div>
+      </div><!-- Struktur Organisasi Humas -->
+      <div class="mb-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Struktur Organisasi Humas</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">👥</span>
+       </div>
+       <div class="max-w-5xl mx-auto space-y-8"><!-- Wakil Kepala Sekolah Humas -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-4 py-3" style="background-color: #059669;">
+          <h5 class="text-sm font-bold text-center text-white">Wakil Kepala Sekolah Bidang Humas</h5>
+         </div>
+         <div class="p-6">
+          <div class="flex flex-col items-center">
+           <div class="w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-green-400 shadow-lg"><img src="https://sman10depok.sch.id/guru/ETI.png" alt="Eti Saptarini, M.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+           </div>
+           <h5 class="text-xl font-bold text-center mb-2" style="color: #059669;">Eti Saptarini, M.Pd.</h5>
+           <p class="text-sm text-center" style="color: #6b7280;">Fisika</p>
+          </div>
+         </div>
+        </div><!-- Staff Humas -->
+        <div class="grid gap-6 md:grid-cols-2"><!-- Staff 1 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Bidang Kemitraan &amp; Layanan Masyarakat</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/LINA.png" alt="Lina Isfarini, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Lina Isfarini, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Humas</p>
+           </div>
+          </div>
+         </div><!-- Staff 2 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Bidang Publikasi &amp; Media Informasi</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/TIKA.png" alt="Tika Mufrika, S.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Tika Mufrika, S.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Humas</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Program Kerja Humas Section -->
+      <div class="mt-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Program Kerja Humas 2026</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">📅</span>
+       </div>
+       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="overflow-x-auto">
+         <table class="w-full">
+          <thead style="background-color: #059669;">
+           <tr>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">No</th>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">Program Kerja</th>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">Waktu Pelaksanaan</th>
+           </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">1</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Mitigasi Bencana</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">April 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">2</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Penelusuran Alumni</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Januari - Desember 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">3</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Kerjasama dunia usaha, kampus atau pihak lain</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Insidental</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">4</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Seminar Pendidikan (Anti Bullying, Narkoba)</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Juli - Agustus 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">5</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Edubazar (Sosialisasi PTN/PTS)</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Oktober 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">6</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengelolaan Sosial Media</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Berkala</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">7</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Membuat dan mempublikasikan konten tentang kegiatan sekolah</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Rutin dan Insidental</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">8</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Seminar Parenting</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Agustus 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">9</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Sosialisasi Program Sekolah di awal tahun pelajaran 2026/2027</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Juli 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">10</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menfasilitasi Rapat Rutin Tim Manajemen</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">minimal 2 pekan sekali</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">11</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menfasilitasi Rapat Pembinaan Guru</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Tiap bulan/akhir bulan</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">12</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menfasilitasi Rapat Wali Kelas X</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Februari, Mei, Agustus, November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">13</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menfasilitasi Rapat Wali Kelas XI</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Februari, Mei, Agustus, November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">14</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menfasilitasi Rapat Wali Kelas XII</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Februari, Mei, Agustus, November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">15</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menfasilitasi Rapat di internal sekolah termasuk rapat komite</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Insidental</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">16</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Raker awal tahun anggaran</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Desember 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">17</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Peringatan Hari Guru Nasional</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">25 November 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">18</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Koordinasi dengan Tim Poe Ibu</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Rutin</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">19</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Penyampaian Informasi kegiatan sekolah</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Rutin (awal bulan) dan Insidental</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">20</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Peringatan Hari Jadi SMAN 10 Depok</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">April 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">21</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengelolaan dana sosial dan laporan tiap awal bulan</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Januari - Desember 2026</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">22</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Menerima tamu sekolah</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Insidental</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">23</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Kunjungan ke warga sekolah yang mengalami musibah/memenuhi undangan</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Insidental</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">24</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Arisan paguyuban santoen</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Sebulan sekali di hari Jumat</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">25</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pembuatan video profil sekolah</td>
+            <td class="px-6 py-4 text-sm" style="color: #6b7280;">Januari 2026</td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Sarpras Page -->
+   <div id="page-sarpras" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Sarana &amp; Prasarana</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">🏢</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         🏫
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Ruang Kelas Modern</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">36 ruang kelas ber-AC dengan fasilitas proyektor dan smart board.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         🔬
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Laboratorium</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Lab Fisika, Kimia, Biologi, Komputer, dan Bahasa dengan peralatan lengkap.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         ���
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Lapangan Olahraga</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Lapangan basket, voli, futsal, dan track atletik standar.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         ����
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Masjid</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Masjid sekolah yang luas untuk kegiatan keagamaan siswa.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         🍽️
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Kantin</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Kantin bersih dengan berbagai pilihan makanan sehat dan bergizi.</p>
+       </div>
+       <div class="text-center p-6 rounded-lg card-hover" style="background-color: #f0fdf4;">
+        <div class="text-5xl mb-4">
+         🚗
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Parkir</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Area parkir luas dan aman untuk siswa dan guru.</p>
+       </div>
+      </div><!-- Struktur Organisasi Sarpras -->
+      <div class="mb-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Struktur Organisasi Sarpras</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">����������</span>
+       </div>
+       <div class="max-w-5xl mx-auto space-y-8"><!-- Wakil Kepala Sekolah Sarpras -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+         <div class="px-4 py-3" style="background-color: #059669;">
+          <h5 class="text-sm font-bold text-center text-white">Wakil Kepala Sekolah Bidang Sarpras</h5>
+         </div>
+         <div class="p-6">
+          <div class="flex flex-col items-center">
+           <div class="w-48 h-48 rounded-full overflow-hidden mb-4 border-4 border-green-400 shadow-lg"><img src="https://sman10depok.sch.id/guru/YUNI.png" alt="Sri Wahyuni Lestari, S.Pd., M.M." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+           </div>
+           <h5 class="text-xl font-bold text-center mb-2" style="color: #059669;">Sri Wahyuni Lestari, S.Pd., M.M.</h5>
+          </div>
+         </div>
+        </div><!-- Staff Sarpras -->
+        <div class="grid gap-6 md:grid-cols-2"><!-- Staff 1 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Bidang Pemeliharaan &amp; Lingkungan</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/SRI%20SUMARSIH.png" alt="Sri Sumarsih, S.Pd., M.M." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Sri Sumarsih, S.Pd., M.M.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Sarpras</p>
+           </div>
+          </div>
+         </div><!-- Staff 2 -->
+         <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+          <div class="px-4 py-3" style="background-color: #059669;">
+           <h5 class="text-sm font-bold text-center text-white">Bidang Inventaris &amp; Administrasi Aset</h5>
+          </div>
+          <div class="p-4">
+           <div class="flex flex-col items-center">
+            <div class="w-32 h-32 rounded-full overflow-hidden mb-3 border-4 border-green-400 shadow-md"><img src="https://sman10depok.sch.id/guru/OKI.png" alt="Oki Siswanto, M.Pd." class="w-full h-full object-cover" onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;color:#10b981;background:#f0fdf4;\'>👨‍🏫</div>';">
+            </div>
+            <h6 class="text-base font-bold text-center mb-1" style="color: #059669;">Oki Siswanto, M.Pd.</h6>
+            <p class="text-xs text-center" style="color: #6b7280;">Staf Sarpras</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Program Kerja Sarpras Section -->
+      <div class="mt-16">
+       <h3 class="text-2xl font-bold text-center mb-6" style="color: #059669;">Program Kerja Sarpras 2026</h3>
+       <div class="decorative-divider mb-8"><span class="decorative-divider-icon">📅</span>
+       </div>
+       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="overflow-x-auto">
+         <table class="w-full">
+          <thead style="background-color: #059669;">
+           <tr>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">No</th>
+            <th class="px-6 py-4 text-left font-bold text-sm uppercase tracking-wider text-white">Program Kerja</th>
+           </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">1</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemasangan Kabel Tray Intalasi Listrik</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">2</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Pengecatan Gedung</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">3</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Perbaikan saluran air belakang gedung A dan B</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">4</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Plafon belakang gedung A</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">5</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan taman jalan raya</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">6</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan taman depan kamar mandi gedung D</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">7</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Taman Vertikal Garden Lantai 3</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">8</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Lapangan pemasangan teralis lapangan depan Lobby Piket</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">9</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Taman selasar kelas</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">10</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengadaan barang habis pakai ATK, alat kebersihan, lampu</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">11</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengadaan lemari piala</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">12</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemasangan KWH baru di gedung A</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">13</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Kursi meja murid gedung RKB baru dan tambahan kelas 10</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">14</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengadaan dan pemeliharaan Printer</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">15</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengadaan laptop/PC 2 buah</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">16</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan genteng di lantai 2 antara gedung A dan B</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">17</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Penambahan pemasangan CCTV</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">18</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan Infokus</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">19</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan AC</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">20</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan sound lapangan</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">21</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan saluran air kamar mandi</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">22</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemasangan pergantian provider internet</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">23</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pengadaan kipas angin kelas 5 buah</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">24</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan wastafel siswa</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">25</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Pemeliharaan gapura</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">26</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Set teko untuk rapat</td>
+           </tr>
+           <tr class="hover:bg-green-50 transition-colors">
+            <td class="px-6 py-4 text-sm font-medium" style="color: #059669;">27</td>
+            <td class="px-6 py-4 text-sm font-semibold" style="color: #374151;">Dispenser air panas</td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Tata Usaha Page -->
+   <div id="page-tata-usaha" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Tata Usaha</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">����</span>
+      </div>
+      <div class="space-y-6">
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">📋 Administrasi Siswa</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Pengelolaan data siswa, legalisir ijazah, surat keterangan, dan dokumen akademik lainnya.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">👨‍🏫 Kepegawaian</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Mengelola data kepegawaian, absensi guru dan staff, serta administrasi SDM sekolah.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">💰 Keuangan</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Pengelolaan keuangan sekolah, pembayaran SPP, dan administrasi keuangan lainnya secara transparan.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md border-l-4" style="border-color: #059669;">
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">�� Persuratan</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Menangani surat-menyurat, pengarsipan dokumen, dan administrasi umum sekolah.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Perpustakaan Page -->
+   <div id="page-perpustakaan" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Perpustakaan</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">📚</span>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         📚
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Koleksi Buku</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Lebih dari 10.000 judul buku meliputi fiksi, non-fiksi, referensi, dan buku pelajaran terkini.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         💻
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">E-Library</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Akses perpustakaan digital dengan ribuan e-book dan jurnal ilmiah online.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         ��
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Ruang Baca</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Ruang baca nyaman ber-AC dengan kapasitas 100 orang untuk membaca dan belajar.</p>
+       </div>
+       <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+        <div class="text-4xl mb-4">
+         ⏰
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #059669;">Jam Operasional</h3>
+        <p class="text-base leading-relaxed" style="color: #374151;">Buka setiap hari Senin-Jumat pukul 07.00-16.00 WIB untuk melayani siswa dan guru.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- Guru Page -->
+   <div id="page-guru" class="page-content hidden">
+    <section class="py-16 px-6 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4" style="color: #059669;">Guru</h2>
+      <div class="decorative-divider"><span class="decorative-divider-icon">👨‍🏫</span>
+      </div>
+      <div id="guru-grid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"><!-- Guru cards will be dynamically inserted here -->
+      </div>
+     </div>
+    </section>
+   </div><!-- Footer -->
+   <footer class="gradient-bg text-white py-8 px-6 text-center">
+    <p id="footer-text" class="text-base opacity-90 mb-3">© 2024 SMAN 10 Depok. Berakhlak Mulia, Berprestasi, Berbudaya Lingkungan, dan Berwawasan Global.</p>
+    <p id="address" class="text-sm opacity-80">📍 Jl. Raya Curug, RT.01/RW.06, Curug, Kec. Bojongsari, Kota Depok, Jawa Barat 16517</p>
+    <p id="phone" class="text-sm opacity-80">📞 (0251) 8617795</p>
+   </footer>
+  </div>
+  <script>
+    // Data Guru
+    const guruData = [
+      { nama: "Asep Panji Lesmana, S.S.", mapel: "Bahasa Sunda", foto: "https://sman10depok.sch.id/guru/ASEP.png" },
+      { nama: "Sri Murniati, S.Pd.", mapel: "Matematika", foto: "https://sman10depok.sch.id/guru/SRI%20MURNIATI.png" },
+      { nama: "Samsudin, S.Pd.", mapel: "Kimia", foto: "https://sman10depok.sch.id/guru/SAMSUDIN.png" },
+      { nama: "Bandi, S.Pd.", mapel: "Matematika", foto: "https://sman10depok.sch.id/guru/BANDI.png" },
+      { nama: "Firmansyah, S.Pd.", mapel: "PJOK", foto: "https://sman10depok.sch.id/guru/FIRMANSYAH.jpg" },
+      { nama: "Rahmat, S.Ag., M.M.", mapel: "PAI dan Budi Pekerti", foto: "https://sman10depok.sch.id/guru/RAHMAT.png" },
+      { nama: "Margana, S.Pd.", mapel: "Bahasa Indonesia", foto: "https://sman10depok.sch.id/guru/MARGANA.png" },
+      { nama: "Rohma Sri Astuti, S.T., M.Pd.", mapel: "Kimia", foto: "https://sman10depok.sch.id/guru/ROHMA.png" },
+      { nama: "Eti Saptarini, M.Pd.", mapel: "Fisika", foto: "https://sman10depok.sch.id/guru/ETI.png" },
+      { nama: "Bheny Kisworo, S.Pd., M.Ikom.", mapel: "Biologi", foto: "https://sman10depok.sch.id/guru/BENI.png" },
+      { nama: "M. Solahuddin, S.Pd., M.H., M.M.", mapel: "Pendidikan Pancasila", foto: "https://sman10depok.sch.id/guru/AL.png" },
+      { nama: "Erwan, M.Pd., M.Sas.", mapel: "Bahasa Inggris", foto: "https://sman10depok.sch.id/guru/ERWAN.png" },
+      { nama: "Heri, S.Kom.", mapel: "Informatika", foto: "https://sman10depok.sch.id/guru/HERI.jpg" },
+      { nama: "Fitra Faturachman, M.Psi.", mapel: "BK", foto: "https://sman10depok.sch.id/guru/FITRA.png" },
+      { nama: "Sri Wahyuni Lestari, S.Pd., M.M.", mapel: "BK", foto: "https://sman10depok.sch.id/guru/YUNI.png" },
+      { nama: "Gita Rani Putri Mangiri, M.Pd.", mapel: "Matematika", foto: "https://sman10depok.sch.id/guru/GITA.png" },
+      { nama: "Sri Sumarsih, S.Pd., M.M.", mapel: "Bahasa Indonesia", foto: "https://sman10depok.sch.id/guru/SRI%20SUMARSIH.png" },
+      { nama: "Sukendar, S.E.", mapel: "Prakarya", foto: "https://sman10depok.sch.id/guru/SUKENDAR.png" },
+      { nama: "Erwin Bikanofa, S.Pd.", mapel: "Geografi", foto: "https://sman10depok.sch.id/guru/ERWIN.png" },
+      { nama: "Dina Meiliana, S.Pd.", mapel: "Sejarah", foto: "https://sman10depok.sch.id/guru/DINA.png" },
+      { nama: "Ahmad Firdaos, S.Pd.", mapel: "PJOK", foto: "https://sman10depok.sch.id/guru/firdaos.png" },
+      { nama: "Desy Purwitasari, S.P.", mapel: "Prakarya", foto: "https://sman10depok.sch.id/guru/DESI.png" },
+      { nama: "Ibnu Fadhilah Prayoga, S.Pd.", mapel: "Sejarah", foto: "https://sman10depok.sch.id/guru/IBNU.png" },
+      { nama: "Lina Isfarini, S.Pd.", mapel: "Sosiologi", foto: "https://sman10depok.sch.id/guru/LINA.png" },
+      { nama: "Nofa Rina Anggraeni, S.Pd.", mapel: "Seni Budaya", foto: "https://sman10depok.sch.id/guru/NOVA.png" },
+      { nama: "Risa Rosmalita, S.Psi.", mapel: "BK", foto: "https://sman10depok.sch.id/guru/RISA.png" },
+      { nama: "Sansan Sumarna, S.Pd.", mapel: "Seni Budaya", foto: "https://sman10depok.sch.id/guru/SANSAN.png" },
+      { nama: "Gunardi, S.Pd.", mapel: "Pendidikan Pancasila", foto: "https://sman10depok.sch.id/guru/GUNARDI.png" },
+      { nama: "Dra. Suryani", mapel: "Bahasa Indonesia", foto: "https://sman10depok.sch.id/guru/SURYANI.png" },
+      { nama: "Setia Rohani Kristina Pangaribuan, S.Si.", mapel: "Fisika", foto: "https://sman10depok.sch.id/guru/SETIA.png" },
+      { nama: "Nabila Nurul Isnaini, S.Pd.", mapel: "Geografi", foto: "https://sman10depok.sch.id/guru/NABILA.png" },
+      { nama: "Tika Mufrika, S.Pd.", mapel: "Matematika", foto: "https://sman10depok.sch.id/guru/TIKA.png" },
+      { nama: "Amdani Darussalam, S.Pd.", mapel: "Matematika", foto: "https://sman10depok.sch.id/guru/AMDANI.png" },
+      { nama: "Laily Hikmah, S.Pd.", mapel: "Matematika TL", foto: "https://sman10depok.sch.id/guru/LAILY.png" },
+      { nama: "Rusman Somantri, S.Pd.", mapel: "PJOK", foto: "https://sman10depok.sch.id/guru/RUSMAN.png" },
+      { nama: "Atikah, S.Pd.", mapel: "Bahasa Sunda", foto: "https://sman10depok.sch.id/guru/ATIKAH.png" },
+      { nama: "Oki Siswanto, M.Pd.", mapel: "Sejarah", foto: "https://sman10depok.sch.id/guru/OKI.png" },
+      { nama: "Tri Sutrisno, S.Pd., M.Ikom.", mapel: "Ekonomi", foto: "https://sman10depok.sch.id/guru/TRI.png" },
+      { nama: "Supriyadi, S.Pd.I., M.Ikom.", mapel: "PAI", foto: "https://sman10depok.sch.id/guru/SUPRIYADI.png" },
+      { nama: "Winda Harti, S.Pd.", mapel: "Ekonomi", foto: "https://sman10depok.sch.id/guru/WINDA.png" },
+      { nama: "Zulfa Nurdiana, S.Pd., M.Si.", mapel: "Biologi", foto: "https://sman10depok.sch.id/guru/ZULFA.png" },
+      { nama: "Muhamad Iman Sobirin, S.Pd.", mapel: "Fisika", foto: "https://sman10depok.sch.id/guru/imamsobirin.png" },
+      { nama: "Efan Yulistiyono, S.Pd.", mapel: "Pendidikan Agama Islam dan Budi Pekerti", foto: "https://sman10depok.sch.id/guru/EVAN.png" },
+      { nama: "Putri Nur Octavia, S.Pd.", mapel: "Sosiologi", foto: "https://sman10depok.sch.id/guru/PUTRI.png" },
+      { nama: "Ravika Pratiwi, S.Pd.", mapel: "Bahasa Inggris", foto: "https://sman10depok.sch.id/guru/RAVI.jpg" },
+      { nama: "Purnama Nuraeni, S.Pd.", mapel: "Sosiologi / Bahasa Sunda", foto: "https://sman10depok.sch.id/guru/PURNAMA.png" }
+    ];
+
+    // Render guru cards
+    function renderGuruCards() {
+      const guruGrid = document.getElementById('guru-grid');
+      if (!guruGrid) return;
+      
+      guruGrid.innerHTML = '';
+      
+      guruData.forEach((guru, index) => {
+        const card = document.createElement('div');
+        card.className = 'guru-card fade-in';
+        card.style.animationDelay = `${index * 0.05}s`;
+        
+        const imageClass = guru.nama.includes('Firmansyah') ? 'guru-image position-top' : 'guru-image';
+        
+        card.innerHTML = `
+          <div class="guru-image-wrapper">
+            <img 
+              src="${guru.foto}" 
+              alt="${guru.nama}" 
+              class="${imageClass}"
+              onerror="this.src=''; this.style.display='none'; this.parentElement.innerHTML='<div style=\\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;color:#10b981;\\'>👨‍🏫</div>';"
+            >
+          </div>
+          <div class="guru-info">
+            <div class="guru-name">${guru.nama}</div>
+            <div class="guru-subject">${guru.mapel}</div>
+          </div>
+        `;
+        
+        guruGrid.appendChild(card);
+      });
+    }
+
+    // Initialize guru cards when page loads
+    renderGuruCards();
+
+    // Carousel Info Terbaru functionality
+    let currentCarouselIndex = 2; // Start with middle item (index 2)
+    let carouselInterval;
+
+    function updateCarousel() {
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      const carouselDots = document.querySelectorAll('.carousel-dot');
+      const totalCarouselItems = carouselItems.length;
+
+      carouselItems.forEach((item, index) => {
+        item.classList.remove('center', 'left-1', 'right-1', 'left-2', 'right-2');
+        
+        // Calculate position relative to current center
+        let diff = index - currentCarouselIndex;
+        
+        // Handle wrap around for circular positioning
+        if (diff > 2) diff -= totalCarouselItems;
+        if (diff < -2) diff += totalCarouselItems;
+        
+        if (diff === 0) {
+          item.classList.add('center');
+        } else if (diff === 1) {
+          item.classList.add('right-1');
+        } else if (diff === -1) {
+          item.classList.add('left-1');
+        } else if (diff === 2) {
+          item.classList.add('right-2');
+        } else if (diff === -2) {
+          item.classList.add('left-2');
+        }
+      });
+
+      carouselDots.forEach((dot, index) => {
+        if (index === currentCarouselIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    function nextCarouselSlide() {
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      const totalCarouselItems = carouselItems.length;
+      currentCarouselIndex = (currentCarouselIndex + 1) % totalCarouselItems;
+      updateCarousel();
+    }
+
+    function prevCarouselSlide() {
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      const totalCarouselItems = carouselItems.length;
+      currentCarouselIndex = (currentCarouselIndex - 1 + totalCarouselItems) % totalCarouselItems;
+      updateCarousel();
+    }
+
+    function goToCarouselSlide(index) {
+      currentCarouselIndex = index;
+      updateCarousel();
+    }
+
+    function startCarousel() {
+      stopCarousel(); // Clear any existing interval
+      carouselInterval = setInterval(nextCarouselSlide, 3000);
+    }
+
+    function stopCarousel() {
+      if (carouselInterval) {
+        clearInterval(carouselInterval);
+      }
+    }
+
+    // Initialize carousel when DOM is ready
+    function initCarousel() {
+      const carouselDots = document.querySelectorAll('.carousel-dot');
+      
+      // Event listeners for carousel dots
+      carouselDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          goToCarouselSlide(index);
+          stopCarousel();
+          startCarousel();
+        });
+      });
+
+      // Pause carousel on hover
+      const carouselContainer = document.querySelector('.carousel-container');
+      if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopCarousel);
+        carouselContainer.addEventListener('mouseleave', startCarousel);
+      }
+
+      // Initialize carousel
+      updateCarousel();
+      startCarousel();
+    }
+
+    // Start carousel
+    initCarousel();
+
+    // Slider functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider-item');
+    const indicators = document.querySelectorAll('.indicator');
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      indicators.forEach(indicator => indicator.classList.remove('active'));
+      
+      currentSlide = (index + totalSlides) % totalSlides;
+      slides[currentSlide].classList.add('active');
+      indicators[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    // Event listeners for slider
+    document.getElementById('next-slide').addEventListener('click', () => {
+      nextSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+
+    document.getElementById('prev-slide').addEventListener('click', () => {
+      prevSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        showSlide(index);
+        stopAutoSlide();
+        startAutoSlide();
+      });
+    });
+
+    // Start auto-slide on page load
+    startAutoSlide();
+
+    // Navigation function
+    function showPage(pageName) {
+      const pages = document.querySelectorAll('.page-content');
+      pages.forEach(page => page.classList.add('hidden'));
+      
+      const selectedPage = document.getElementById('page-' + pageName);
+      if (selectedPage) {
+        selectedPage.classList.remove('hidden');
+      }
+      
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => link.classList.remove('active'));
+      
+      const activeLink = document.querySelector(`a[href="#${pageName}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+      
+      window.scrollTo(0, 0);
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b84fa2606fa7550',t:'MTc2NzQ2OTMyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
